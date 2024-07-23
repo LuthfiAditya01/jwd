@@ -944,6 +944,24 @@ video {
   transform: none;
 }
 
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up var(--tw-animate-duration, 1s)
+    var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s)
+    var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -2786,6 +2804,126 @@ video {
 
 .forced-color-adjust-none {
   forced-color-adjust: none;
+}
+
+.animate-replace {
+  --tw-animate-composition: replace;
+  animation-composition: var(--tw-animate-composition);
+}
+
+.animate-add {
+  --tw-animate-composition: add;
+  animation-composition: var(--tw-animate-composition);
+}
+
+.animate-accumulate {
+  --tw-animate-composition: accumulate;
+  animation-composition: var(--tw-animate-composition);
+}
+
+.animate-delay-1000 {
+  --tw-animate-delay: 1000ms;
+  animation-delay: var(--tw-animate-delay);
+}
+
+.animate-delay-500 {
+  --tw-animate-delay: 500ms;
+  animation-delay: var(--tw-animate-delay);
+}
+
+.animate-delay-200 {
+  --tw-animate-delay: 200ms;
+  animation-delay: var(--tw-animate-delay);
+}
+
+.animate-normal {
+  --tw-animate-direction: normal;
+  animation-direction: var(--tw-animate-direction);
+}
+
+.animate-reverse {
+  --tw-animate-direction: reverse;
+  animation-direction: var(--tw-animate-direction);
+}
+
+.animate-alternate {
+  --tw-animate-direction: alternate;
+  animation-direction: var(--tw-animate-direction);
+}
+
+.animate-alternate-reverse {
+  --tw-animate-direction: alternate-reverse;
+  animation-direction: var(--tw-animate-direction);
+}
+
+.animate-fill-none {
+  --tw-animate-fill: normal;
+  animation-fill-mode: var(--tw-animate-fill);
+}
+
+.animate-fill-forwards {
+  --tw-animate-fill: forwards;
+  animation-fill-mode: var(--tw-animate-fill);
+}
+
+.animate-fill-backwards {
+  --tw-animate-fill: backwards;
+  animation-fill-mode: var(--tw-animate-fill);
+}
+
+.animate-fill-both {
+  --tw-animate-fill: both;
+  animation-fill-mode: var(--tw-animate-fill);
+}
+
+.animate-infinite {
+  --tw-animate-iteration: infinite;
+  animation-iteration-count: var(--tw-animate-iteration);
+}
+
+.animate-once {
+  --tw-animate-iteration: 1;
+  animation-iteration-count: var(--tw-animate-iteration);
+}
+
+.animate-twice {
+  --tw-animate-iteration: 2;
+  animation-iteration-count: var(--tw-animate-iteration);
+}
+
+.animate-thrice {
+  --tw-animate-iteration: 3;
+  animation-iteration-count: var(--tw-animate-iteration);
+}
+
+.animate-run {
+  --tw-animate-state: running;
+  animation-play-state: var(--tw-animate-state);
+}
+
+.animate-play {
+  --tw-animate-state: running;
+  animation-play-state: var(--tw-animate-state);
+}
+
+.animate-stop {
+  --tw-animate-state: paused;
+  animation-play-state: var(--tw-animate-state);
+}
+
+.animate-pause {
+  --tw-animate-state: paused;
+  animation-play-state: var(--tw-animate-state);
+}
+
+.animate-ease {
+  --tw-animate-easing: ease;
+  animation-timing-function: var(--tw-animate-easing);
+}
+
+.animate-ease-out {
+  --tw-animate-easing: cubic-bezier(0, 0, 0.2, 1);
+  animation-timing-function: var(--tw-animate-easing);
 }
 
 @media (min-width: 640px) {
