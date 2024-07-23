@@ -3,21 +3,32 @@ include 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Sanitize and validate input
+  $nik = htmlspecialchars(trim($_POST["nik"]));
   $nama = htmlspecialchars(trim($_POST["nama"]));
   $harga = htmlspecialchars(trim($_POST["harga"]));
   $jumlah = htmlspecialchars(trim($_POST["jumlah"]));
 
+  // Check if any field is empty
+  if (empty($nik) || empty($nama) || empty($harga) || empty($jumlah)) {
+    die("Semua nilai harus diisi.");
+  }
+
+  // Check if NIK is more than 16 digits
+  if (strlen($nik) > 16) {
+    die("NIK tidak boleh lebih dari 16 digit.");
+  }
+
   // Check if inputs are valid numbers
   if (!is_numeric($harga) || !is_numeric($jumlah)) {
-    die("Harga and Jumlah should be numeric values.");
+    die("Harga dan Jumlah harus berupa nilai numerik.");
   }
 
   // Prepare the SQL statement
-  $sql = "INSERT INTO penjualan (namabarang, harga, jumlahbarang) VALUES (?, ?, ?)";
+  $sql = "INSERT INTO penjualan (namabarang, harga, jumlahbarang, nik) VALUES (?, ?, ?, ?)";
 
   if ($stmt = $conn->prepare($sql)) {
     // Bind parameters
-    $stmt->bind_param("sii", $nama, $harga, $jumlah);
+    $stmt->bind_param("siii", $nama, $harga, $jumlah, $nik);
 
     // Execute the statement
     if ($stmt->execute()) {
@@ -35,6 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -66,7 +79,7 @@ $conn->close();
             <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Insert</a>
           </li>
           <li>
-            <a href="view.php" disabled class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Table View</a>
+            <a href="view.php" disabled class="disabled:cursor-not-allowed block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Table View</a>
           </li>
         </ul>
       </div>
@@ -74,6 +87,10 @@ $conn->close();
   </nav>
 
   <form action="index.php" method="post" class="max-w-sm mx-auto">
+    <div class="mb-5">
+      <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NIK</label>
+      <input type="number" maxlength="16" id="nik" name="nik" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="255" placeholder="Nomor Induk Kependudukan" required />
+    </div>
     <div class="mb-5">
       <label for="nama" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Barang</label>
       <input type="text" id="nama" name="nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="255" placeholder="Sabun Cuci Piring" required />
@@ -86,7 +103,7 @@ $conn->close();
       <label for="jumlah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Barang</label>
       <input type="number" id="jumlah" name="jumlah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="11" placeholder="3" required />
     </div>
-    <button type="submit" class="text-white bg-blue-700 disabled:bg-blue-300 hover:bg-blue-800  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <button type="submit" disabled class="disabled:cursor-not-allowed text-white bg-blue-700 disabled:bg-blue-300 hover:bg-blue-800  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
   </form>
 
 
@@ -109,8 +126,8 @@ $conn->close();
         input.addEventListener('input', checkForm);
       });
 
-      checkForm(); // To check the initial state
-    }
+      checkForm(); // Initial check to set the correct state on page load
+    };
   </script>
 </body>
 
