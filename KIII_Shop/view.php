@@ -56,6 +56,9 @@
                         Total
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Image
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Action
                     </th>
                 </tr>
@@ -81,6 +84,7 @@
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     </td>
                 </tr> -->
+
                 <?php
                 $result = $conn->query("SELECT * FROM penjualan");
 
@@ -101,7 +105,10 @@
                         " . $row['jumlahbarang'] . "
                     </td>
                     <td class='px-6 py-4'>
-                        " . $row['total'] . "
+                    " . $row['total'] . "
+                    </td>
+                    <td class='px-6 py-4'>
+                        <img src='" . $row['filepath'] . "' alt=''>
                     </td>
                     <td class='px-6 py-4'>
                         <a href='update.php?id=" . $row['id'] . "' class='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Edit</a>
